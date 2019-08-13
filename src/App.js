@@ -1,26 +1,65 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import PrinterPanel from './PrinterPanel';
+import { withStyles } from '@material-ui/core/styles';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const styles = theme => ({
+  root: {
+    padding: theme.spacing(3, 2),
+  },
+});
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: null,
+    };
+  }
+
+  componentDidMount() {
+    fetch('/status')
+      .then(response => response.json())
+      .then(data => this.setState({ data }));
+  }
+
+  renderPrinterPanels(){
+    const data = this.state.data;
+    if (data == null){
+      return "Loading..."
+    }
+    const printers = data.printers;
+    const items = [];
+    for (var printer of printers){
+      items.push(<PrinterPanel printer={printer} key={printer.name}/>)
+    }
+    return items
+  }
+  
+  render() {
+    const { classes } = this.props;
+    return (
+    <div >
+      <AppBar position="static" color="default">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
+            Octoprint Printers
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Paper className={classes.root}>
+        {this.renderPrinterPanels()}
+      </Paper>
     </div>
-  );
+  )};
 }
 
-export default App;
+export default withStyles(styles)(App);
