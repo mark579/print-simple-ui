@@ -25,6 +25,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.timer = setInterval(()=> this.getStatus(), 1000);
+  }
+
+  componentWillUnmount() {
+    this.timer = null; // here...
+  }
+
+  getStatus(){
     fetch('/status')
       .then(response => response.json())
       .then(data => this.setState({ data }));

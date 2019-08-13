@@ -18,13 +18,9 @@ const useStyles = makeStyles(theme => ({
   column: {
     paddingLeft: '5px',
   },
-  wideColumn: {
-    flexBasis: '50%',
-  },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
-    width: '100%',
   },
   icon: {
     margin: theme.spacing(1),
