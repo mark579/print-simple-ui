@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    this.timer = null; // here...
+    this.timer = null;
   }
 
   getStatus(){
@@ -46,7 +46,7 @@ class App extends React.Component {
     const printers = data.printers;
     const items = [];
     for (var printer of printers){
-      items.push(<PrinterPanel printer={printer} key={printer.name}/>)
+      items.push(<PrinterPanel printer={printer} ports={data.ports} key={printer.name}/>)
     }
     return items
   }
