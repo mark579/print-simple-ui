@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = setInterval(()=> this.getStatus(), 1000);
+    this.timer = setInterval(()=> this.getStatus(), 1500);
   }
 
   componentWillUnmount() {
