@@ -81,14 +81,53 @@ function ConnectionButtons(props) {
 
 function OperationalButtons(props) {
   const classes = useStyles();
+
+  function preheatRequest(printer_name) {
+    fetch('/preheat/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({printer_name: printer_name})
+    })
+  }
+
+  function extrudeRequest(printer_name){
+    fetch('/extrude/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({printer_name: printer_name})
+    })
+  }
+
+  function jobRequest(printer_name, operation){
+    fetch('/job/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({printer_name: printer_name, operation: operation})
+    })
+  }
+
+  function movezRequest(printer_name){
+    fetch('/movez/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({printer_name: printer_name, z: 10})
+    })
+  }
   return (
     <Container>
-      <Button variant="contained" className={classes.button}>Cancel</Button>
-      <Button variant="contained" className={classes.button}>Preheat</Button>
-      <Button variant="contained" className={classes.button}>Restart</Button>
-      <Button variant="contained" className={classes.button}>Extrude</Button>
-      <Button variant="contained" className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>
-      <Button variant="contained" className={classes.button}><ArrowDownwardIcon className={classes.icon} /></Button>
+      <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}>Cancel</Button>
+      <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}>Preheat</Button>
+      <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}>Restart</Button>
+      <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}>Extrude</Button>
+      <Button variant="contained" onClick={(e) => movezRequest(props.name)} className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>
     </Container>
   );
 }
