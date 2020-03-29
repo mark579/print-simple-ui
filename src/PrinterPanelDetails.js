@@ -5,7 +5,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -39,7 +38,7 @@ function ConnectionButtons(props) {
 
   function portItems(ports) {
     const availablePorts = ports.filter(port => port.available);
-    if (availablePorts.length == 0) {
+    if (availablePorts.length === 0) {
       return <MenuItem value=''>No Ports Available</MenuItem>
     };
     var items = [];
@@ -59,8 +58,6 @@ function ConnectionButtons(props) {
       body: JSON.stringify({printer_name: printer_name, port: port})
     })
   }
-
-  var portItems = portItems(props.ports);
   return (
     <Container>
       <InputLabel htmlFor="port-input">Port</InputLabel>
@@ -72,7 +69,7 @@ function ConnectionButtons(props) {
           id: 'port-input',
         }}
       >
-        {portItems}
+        {portItems(props.ports)}
       </Select>
       <Button variant="contained" onClick={(e) => connectRequest(props.name, values.port.split('-')[1].trim())} className={classes.button}>Connect</Button>
     </Container>

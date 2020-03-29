@@ -11,6 +11,7 @@ import './App.css';
 
 const styles = theme => ({
   root: {
+    background: 'rgb(245,245,245)',
     padding: theme.spacing(3, 2),
   },
 });
@@ -55,7 +56,7 @@ class App extends React.Component {
     const { classes } = this.props;
     return (
     <div >
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" color="inherit">
             Octoprint Printers
@@ -63,7 +64,7 @@ class App extends React.Component {
         </Toolbar>
       </AppBar>
 
-      <Paper className={classes.root}>
+      <Paper className={classes.root} elevation={3} >
         {this.renderPrinterPanels()}
       </Paper>
     </div>
