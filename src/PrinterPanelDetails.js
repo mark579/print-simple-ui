@@ -51,7 +51,7 @@ function ConnectionButtons(props) {
   }
 
   function connectRequest(printer_name, port){
-    fetch('/connect/', {
+    fetch('/api/connect/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function OperationalButtons(props) {
   const classes = useStyles();
 
   function preheatRequest(printer_name) {
-    fetch('/preheat/', {
+    fetch('/api/preheat/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ function OperationalButtons(props) {
   }
 
   function extrudeRequest(printer_name){
-    fetch('/extrude/', {
+    fetch('/api/extrude/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ function OperationalButtons(props) {
   }
 
   function jobRequest(printer_name, operation){
-    fetch('/job/', {
+    fetch('/api/job/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ function OperationalButtons(props) {
   }
 
   function movezRequest(printer_name){
-    fetch('/movez/', {
+    fetch('/api/movez/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

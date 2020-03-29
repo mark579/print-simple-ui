@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   getStatus(){
-    fetch('/status')
+    fetch('/api/status')
       .then(response => response.json())
       .then(data => this.setState({ data }));
   }
