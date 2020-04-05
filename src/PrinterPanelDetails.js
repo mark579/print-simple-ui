@@ -5,14 +5,23 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import CancelIcon from '@material-ui/icons/Cancel';
+import RestartIcon from '@material-ui/icons/Autorenew';
+import ExtruderIcon from './icons/ExtruderIcon';
+import ThermometerIcon from './icons/ThermometerIcon';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   button: {
+    margin: theme.spacing(2),
+  },
+  icon: {
     margin: theme.spacing(1),
+    fontSize: 40,
   },
 }));
+
 
 function PrinterPanelDetails(props) {
   const isConnected = props.isConnected;
@@ -120,10 +129,10 @@ function OperationalButtons(props) {
   }
   return (
     <Container>
-      <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}>Cancel</Button>
-      <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}>Preheat</Button>
-      <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}>Restart</Button>
-      <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}>Extrude</Button>
+      <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}><CancelIcon color="secondary" className={classes.icon} /></Button>
+      <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}><ThermometerIcon className={classes.icon} /></Button>
+      <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}><RestartIcon className={classes.icon} /></Button>
+      <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}><ExtruderIcon className={classes.icon} /></Button>
       <Button variant="contained" onClick={(e) => movezRequest(props.name)} className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>
     </Container>
   );
