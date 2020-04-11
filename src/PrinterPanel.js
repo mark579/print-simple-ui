@@ -57,7 +57,7 @@ function PrinterPanel(props) {
         </span>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <PrinterPanelDetails name={printer.name} isConnected={printer.connection.state !== "Closed" } ports={props.ports} />
+        <PrinterPanelDetails name={printer.name} isConnected={printer.connection.state !== "Closed" } ports={props.ports} files={props.printer.files} />
       </ExpansionPanelDetails>
     </ExpansionPanel>
 
