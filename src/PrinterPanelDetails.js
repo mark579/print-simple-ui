@@ -159,7 +159,7 @@ function OperationalButtons(props) {
 
   function fileDisplay(fullPath){
     var lastSlash = fullPath.lastIndexOf("/");
-    var period = fullPath.indexOf(".");
+    var period = fullPath.lastIndexOf(".");
     return fullPath.substr(lastSlash+1, period-lastSlash-1);
   }
 
