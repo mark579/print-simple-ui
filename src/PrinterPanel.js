@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
   },
+  panel: {
+    fontSize: 30,
+  }
 }));
 
 function PrinterPanel(props) {
@@ -41,7 +44,7 @@ function PrinterPanel(props) {
         id="panel1c-header"
       >
         <span className={classes.column} style={{ width: "20%" }}>
-          <Typography>{props.printer.name}</Typography>
+          <Typography >{props.printer.name}</Typography>
         </span>
         <span className={classes.column} style={{ width: "20%" }}>
           <Typography className={classes.secondaryHeading}>{hotend.actual}/{bed.actual}</Typography>
@@ -54,7 +57,7 @@ function PrinterPanel(props) {
         </span>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <PrinterPanelDetails name={printer.name} isConnected={printer.connection.state !== "Closed" } ports={props.ports} />
+        <PrinterPanelDetails name={printer.name} isConnected={printer.connection.state !== "Closed" } ports={props.ports} files={props.printer.files} />
       </ExpansionPanelDetails>
     </ExpansionPanel>
 

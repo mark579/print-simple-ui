@@ -1,24 +1,43 @@
 import React from 'react';
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-
+import CancelIcon from '@material-ui/icons/Cancel';
+import PrintIcon from '@material-ui/icons/Print';
+import RestartIcon from '@material-ui/icons/Autorenew';
+import ExtruderIcon from './icons/ExtruderIcon';
+import ThermometerIcon from './icons/ThermometerIcon';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
   },
+  icon: {
+    margin: theme.spacing(1),
+    fontSize: 36,
+  },
+  fileBox: {
+    display: "flex",
+  },
+  fileSelector: {
+    margin: "auto",
+  }
 }));
+
 
 function PrinterPanelDetails(props) {
   const isConnected = props.isConnected;
+
   if (isConnected) {
-    return <OperationalButtons name={props.name} />;
+    return <OperationalButtons name={props.name} files={props.files}  />;
   }
+
   return <ConnectionButtons name={props.name} ports={props.ports} />;
 }
 
@@ -78,6 +97,7 @@ function ConnectionButtons(props) {
 
 function OperationalButtons(props) {
   const classes = useStyles();
+  const [selectedFile, setSelectedFile] = React.useState('');
 
   function preheatRequest(printer_name) {
     fetch('/api/preheat/', {
@@ -118,13 +138,60 @@ function OperationalButtons(props) {
       body: JSON.stringify({printer_name: printer_name, z: 10})
     })
   }
+
+  function printFile(printer_name){
+    fetch('/api/print_file/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({printer_name: printer_name, file_name: selectedFile})
+    })
+  }
+
+  function fileMenuItems(files){
+    var menuItems = [<MenuItem value="" key='placeholder' disabled> Select Object </MenuItem>]
+    if(files){
+      menuItems.push(files.map(f => <MenuItem key={f} value={f}>{fileDisplay(f)}</MenuItem>));
+    }
+    return menuItems;
+  }
+
+  function fileDisplay(fullPath){
+    var lastSlash = fullPath.lastIndexOf("/");
+    var period = fullPath.indexOf(".");
+    return fullPath.substr(lastSlash+1, period-lastSlash-1);
+  }
+
+  function handleChange(e){
+    setSelectedFile(e.target.value);
+  }
+
+
   return (
     <Container>
-      <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}>Cancel</Button>
-      <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}>Preheat</Button>
-      <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}>Restart</Button>
-      <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}>Extrude</Button>
-      <Button variant="contained" onClick={(e) => movezRequest(props.name)} className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>
+      <Box display="flex">
+        <Box flexGrow={1}>
+          <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}><CancelIcon color="secondary" className={classes.icon} /></Button>
+          <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}><ThermometerIcon className={classes.icon} /></Button>
+          <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}><RestartIcon className={classes.icon} /></Button>
+          <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}><ExtruderIcon className={classes.icon} /></Button>
+          <Button variant="contained" onClick={(e) => movezRequest(props.name)} className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>
+        </Box>
+        <Box className={classes.fileBox}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <Select className={classes.fileSelector}
+                value={selectedFile}
+                onChange={handleChange}
+                displayEmpty
+                id="file-selector"
+              >
+                {fileMenuItems(props.files)}
+            </Select>
+          </FormControl>
+          <Button variant="contained" onClick={(e) => printFile(props.name)} className={classes.button}><PrintIcon className={classes.icon} /></Button>
+        </Box>
+      </Box>
     </Container>
   );
 }
