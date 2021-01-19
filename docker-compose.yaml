@@ -1,0 +1,7 @@
+services:
+  print-simple-ui:
+    image: madsunshinecreations/print-simple-ui:latest
+    ports:
+      - "80:80"
+  print-simple:
+    image: madsunshinecreations/print-simple:latest
