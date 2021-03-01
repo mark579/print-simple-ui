@@ -1,7 +1,7 @@
 import React from 'react';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
@@ -37,8 +37,8 @@ function PrinterPanel(props) {
   const job = props.printer.job
 
   return (
-    <ExpansionPanel>
-      <ExpansionPanelSummary
+    <Accordion>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1c-content"
         id="panel1c-header"
@@ -53,13 +53,13 @@ function PrinterPanel(props) {
           <Typography className={classes.secondaryHeading} noWrap >{job.name}</Typography>
         </span>
         <span className={classes.column} style={{ width: "10%" }}>
-          <Typography className={classes.secondaryHeading}><LinearProgress variant="determinate" value={Number(job.progress.toFixed())} /></Typography>
+          <LinearProgress variant="determinate" value={Number(job.progress.toFixed())} />
         </span>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <PrinterPanelDetails name={printer.name} isConnected={printer.connection.state !== "Closed" } ports={props.ports} files={props.printer.files} />
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
 
   )
 }
