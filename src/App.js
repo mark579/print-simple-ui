@@ -220,7 +220,9 @@ export default function App() {
           <Paper elevation={3}>{renderPrinterPanels()}</Paper>
         )}
         {selectedMenu === menu.orders && (
-          <Paper elevation={3}><EtsyOrders /></Paper>
+          <Paper elevation={3}>
+            <EtsyOrders />
+          </Paper>
         )}
       </main>
     </div>

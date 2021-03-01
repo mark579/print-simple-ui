@@ -1,18 +1,18 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-module.exports = function(app) {
+const { createProxyMiddleware } = require("http-proxy-middleware");
+module.exports = function (app) {
   app.use(
-    '/etsy',
+    "/etsy",
     createProxyMiddleware({
-      target: 'http://localhost:8081',
+      target: "http://localhost:8081",
       pathRewrite: {
-        '^/etsy/': '/', // remove base path
+        "^/etsy/": "/", // remove base path
       },
     })
   );
   app.use(
-    '/api',
+    "/api",
     createProxyMiddleware({
-      target: 'https://print.madsunshinecreations.com',
+      target: "https://print.madsunshinecreations.com",
       changeOrigin: true,
       // pathRewrite: {
       //   '^/api/': '/', // remove base path

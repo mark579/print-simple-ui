@@ -220,6 +220,8 @@ function OperationalButtons(props) {
         return `${classes.icon} ${classes.warm}`;
       case 2:
         return `${classes.icon} ${classes.hot}`;
+      default:
+        return classes.icon;
     }
   }
 

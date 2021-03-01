@@ -1,13 +1,13 @@
-import React,  { useEffect, useState } from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import ImageIcon from '@material-ui/icons/Image';
+import React, { useEffect, useState } from "react";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import ImageIcon from "@material-ui/icons/Image";
 
 const useStyles = makeStyles({
   table: {
@@ -27,7 +27,7 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    '&:nth-of-type(odd)': {
+    "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
   },
@@ -35,11 +35,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function EtsyOrders() {
   const classes = useStyles();
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    getOrders()
-  }, [])
+    getOrders();
+  }, []);
 
   const getOrders = () => {
     fetch("/etsy/orders")
@@ -50,9 +50,11 @@ export default function EtsyOrders() {
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead> 
+        <TableHead>
           <TableRow className={classes.head}>
-            <StyledTableCell align="center"><ImageIcon/></StyledTableCell>
+            <StyledTableCell align="center">
+              <ImageIcon />
+            </StyledTableCell>
             <StyledTableCell>Order</StyledTableCell>
             <StyledTableCell align="right">Primary Color</StyledTableCell>
             <StyledTableCell align="right">Seconday Color</StyledTableCell>
@@ -65,10 +67,10 @@ export default function EtsyOrders() {
           {orders.map((row) => (
             <StyledTableRow key={row.name}>
               <TableCell component="th" scope="row">
-                <img alt='product' src={row.image_url} />
+                <img alt="product" src={row.image_url} />
               </TableCell>
               <TableCell component="th" scope="row">
-                 {row.name}
+                {row.name}
               </TableCell>
               <TableCell align="right">{row.primary_color}</TableCell>
               <TableCell align="right">{row.secondary_color}</TableCell>
