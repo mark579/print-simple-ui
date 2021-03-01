@@ -22,6 +22,12 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     fontSize: 36,
   },
+  hot: {
+    fill: "red",
+  },
+  warm: {
+    fill: "orange",
+  },
   fileBox: {
     display: "flex",
   },
@@ -98,14 +104,21 @@ function ConnectionButtons(props) {
 function OperationalButtons(props) {
   const classes = useStyles();
   const [selectedFile, setSelectedFile] = React.useState('');
+  const [heatLevel, setHeatLevel] = React.useState(0);
 
   function preheatRequest(printer_name) {
+    if(heatLevel === 2){
+      setHeatLevel(0)
+    }
+    else{
+      setHeatLevel(heatLevel + 1)
+    }
     fetch('/api/preheat/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({printer_name: printer_name})
+      body: JSON.stringify({printer_name: printer_name, heat_level: heatLevel})
     })
   }
 
@@ -167,13 +180,24 @@ function OperationalButtons(props) {
     setSelectedFile(e.target.value);
   }
 
+  function heatClasses(){
+    switch(heatLevel) {
+      case 0:
+        return classes.icon;
+      case 1:
+        return `${classes.icon} ${classes.warm}`
+      case 2:
+        return `${classes.icon} ${classes.hot}` 
+    }
+  }
+
 
   return (
     <Container>
       <Box display="flex">
         <Box flexGrow={1}>
           <Button variant="contained" onClick={(e) => jobRequest(props.name, "cancel")} className={classes.button}><CancelIcon color="secondary" className={classes.icon} /></Button>
-          <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}><ThermometerIcon className={classes.icon} /></Button>
+          <Button variant="contained" onClick={(e) => preheatRequest(props.name)} className={classes.button}><ThermometerIcon className={heatClasses()} /></Button>
           <Button variant="contained" onClick={(e) => jobRequest(props.name, "start")} className={classes.button}><RestartIcon className={classes.icon} /></Button>
           <Button variant="contained" onClick={(e) => extrudeRequest(props.name)} className={classes.button}><ExtruderIcon className={classes.icon} /></Button>
           <Button variant="contained" onClick={(e) => movezRequest(props.name)} className={classes.button}><ArrowUpwardIcon className={classes.icon} /></Button>

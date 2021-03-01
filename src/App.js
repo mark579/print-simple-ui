@@ -216,10 +216,10 @@ export default function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {selectedMenu == menu.printers && (
+        {selectedMenu === menu.printers && (
           <Paper elevation={3}>{renderPrinterPanels()}</Paper>
         )}
-        {selectedMenu == menu.orders && (
+        {selectedMenu === menu.orders && (
           <Paper elevation={3}><EtsyOrders /></Paper>
         )}
       </main>
