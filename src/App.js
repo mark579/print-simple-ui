@@ -216,14 +216,22 @@ export default function App() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {selectedMenu === menu.printers && (
-          <Paper elevation={3}>{renderPrinterPanels()}</Paper>
-        )}
-        {selectedMenu === menu.orders && (
-          <Paper elevation={3}>
-            <EtsyOrders />
-          </Paper>
-        )}
+        <Paper
+          elevation={3}
+          className={clsx(classes.menuButton, {
+            [classes.hide]: selectedMenu != menu.printers,
+          })}
+        >
+          {renderPrinterPanels()}
+        </Paper>
+        <Paper
+          elevation={3}
+          className={clsx(classes.menuButton, {
+            [classes.hide]: selectedMenu != menu.orders,
+          })}
+        >
+          <EtsyOrders />
+        </Paper>
       </main>
     </div>
   );
